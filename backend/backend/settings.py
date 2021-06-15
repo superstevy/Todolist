@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 # import django_heroku
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -40,7 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'todolist'
+    'todolist',
+    'cloudinary',
 ]
 
 MIDDLEWARE = [
@@ -139,3 +143,9 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10
 }
+
+cloudinary.config( 
+  cloud_name = "dxct8rh7c", 
+  api_key = "211453584171844", 
+  api_secret = "RJj5Er47QjQ33yDV_9Pig2NNnjs" 
+)
