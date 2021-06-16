@@ -7,5 +7,5 @@ class TodoForm(forms.ModelForm):
         model = Todo
         fields = '__all__'
         widgets = {
-            'todo': forms.Textarea()
+            'todo_input': forms.Textarea()
         }
