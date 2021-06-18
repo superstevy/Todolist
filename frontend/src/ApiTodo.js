@@ -1,20 +1,37 @@
-import React from 'react'
-const axios = require('axios').default
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
+import { todos } from './Redux/states'
 
 function ApiTodo () {
-  const url = 'http://127.0.0.1:8000/'
+  const [tasks, setTasks] = useState([todos])
+  const url = 'http://127.0.0.1:8000/todolist/task-list/'
+  useEffect(() => {
+    axios.get(url)
+      .then(res => {
+        setTasks(res.data)
+      })
+  }, [tasks])
   return (
-    <div>
-      {
-        async function getTodo () {
-          try {
-            const response = await axios.get(url, { params: { id: '', name: '' } })
-            console.log(response.data)
-          } catch (err) {
-            console.error(err)
-          }
-        }
-      }
+    <div id='list-wrapper'>
+      {tasks.map((task, index) => {
+        return (
+          <div key={index} className='task-wrapper flex-wrapper'>
+
+            <div style={{ flex: 7 }}>
+              <span>{task.title}</span>
+            </div>
+
+            <div style={{ flex: 1 }}>
+              <button className='btn btn-outline-info'>Edit</button>
+            </div>
+
+            <div style={{ flex: 1 }}>
+              <button className='btn btn-outline-dark'>-</button>
+            </div>
+
+          </div>
+        )
+      })}
     </div>
   )
 }

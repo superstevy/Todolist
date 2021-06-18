@@ -3,12 +3,14 @@ import './App.css'
 import TodoInput from './Components/TodoInput'
 import TodoList from './Components/TodoList'
 import 'bootstrap/dist/css/bootstrap.css'
+import ApiTodo from './ApiTodo'
 
 function App () {
   return (
-    <div className='App m-4'>
+    <div className='container'>
       <TodoInput />
       <TodoList />
+      <ApiTodo />
     </div>
   )
 }

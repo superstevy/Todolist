@@ -1,43 +1,42 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { deleteTodo, updateTodo } from '../Redux/actions'
-
 function TodoItem ({ todo }) {
   const [editable, setEditable] = useState(false)
   const [completed, setCompleted] = useState(false)
-  const [name, setName] = useState(todo.name)
+  const [title, setTitle] = useState(todo.title)
 
   const dispatch = useDispatch()
   return (
-    <div>
+    <div id='list-wrapper'>
       <div className='row mx-2 align-items-center'>
         <div className='id'>
-          {(name !== '') && `#${todo.id.length > 1 ? todo.id[2] : todo.id}`}
+          {(title !== '') && `#${todo.id.length > 1 ? todo.id[2] : todo.id}`}
         </div>
         <div className='col'>
           {editable
             ? <input
                 type='text'
                 className='form-control'
-                value={name}
+                value={title}
                 onChange={
-                  (e) => setName(e.target.value)
+                  (e) => setTitle(e.target.value)
                 }
               />
             : <h4>{todo.name}</h4>}
         </div>
         {
-          (name !== '') &&
+          (title !== '') &&
             <button
               onClick={() => {
                 dispatch(updateTodo(
                   {
                     ...todo,
-                    name: name
+                    title: title
                   }
                 ))
                 if (editable) {
-                  setName(todo.name)
+                  setTitle(todo.title)
                 }
                 setEditable(!editable)
               }}
@@ -46,7 +45,7 @@ function TodoItem ({ todo }) {
             </button>
         }
         {
-          (name !== '') &&
+          (title !== '') &&
             <button
               onClick={() => {
                 if (completed) {

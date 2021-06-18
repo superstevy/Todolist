@@ -9,10 +9,10 @@ from .models import Task
 def todolistOverview(request):
     todolist_urls = {
         'List': '/task_list/',
-        'Detail View': '/task-detail/<str:pk>/',
+        'Detail View': '/task-detail/<int:pk>/',
         'Create': '/task-create/',
-        'Update': '/task-update/<str:pk>/',
-        'Delete': '/task-delete/<str:pk>/',
+        'Update': '/task-update/<int:pk>/',
+        'Delete': '/task-delete/<int:pk>/',
     }
     return Response(todolist_urls)
 
