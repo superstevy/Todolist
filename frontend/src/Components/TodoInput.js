@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import { addTodo } from '../Redux/actions'
+import { todos } from '../Redux/states'
 import { v1 as uuid } from 'uuid'
 import { useDispatch } from 'react-redux'
+import axios from 'axios'
 
 // function TodoInput () {
 //   const [name, setName] = useState('')
@@ -38,11 +40,48 @@ import { useDispatch } from 'react-redux'
 
 function TodoInput () {
   const [title, setTitle] = useState('')
+  const [tasks, setTasks] = useState(todos)
   const dispatch = useDispatch()
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    console.log('ITEM: ', title)
+    const urlCreate = 'http://127.0.0.1:8000/todolist/task-create/'
+    axios.get(urlCreate, {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify(dispatch(addTodo(
+        {
+          ...tasks,
+          title: title,
+          completed: false
+        }
+      )))
+    }).then((res) => {
+      setTasks({
+        id: uuid(),
+        title: '',
+        completed: false
+      })
+    }).catch((error) => {
+      console.log('ERROR: ', error)
+    })
+    // (title !== '') &&
+    // dispatch(addTodo(
+    //   {
+    //     id: uuid(),
+    //     title: title,
+    //     completed: false
+    //   }
+    // ))
+    setTitle('')
+  }
   return (
     <div id='task-container'>
       <div id='form-wrapper'>
-        <form id='form'>
+        <form onSubmit={handleSubmit} id='form'>
           <div className='flex-wrapper'>
             <div style={{ flex: 6 }}>
               <input
@@ -56,23 +95,7 @@ function TodoInput () {
             </div>
 
             <div style={{ flex: 1 }}>
-              <input
-                id='submit'
-                className='btn btn-warning'
-                type='submit'
-                name='Add'
-                onClick={() => {
-                  (title !== '') &&
-                    dispatch(addTodo(
-                      {
-                        id: uuid(),
-                        title: title,
-                        completed: false
-                      }
-                    ))
-                  setTitle('')
-                }}
-              />
+              <input id='submit' className='btn btn-warning' type='submit' name='Add' />
             </div>
           </div>
         </form>

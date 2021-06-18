@@ -4,13 +4,16 @@ import { todos } from './Redux/states'
 
 function ApiTodo () {
   const [tasks, setTasks] = useState([todos])
-  const url = 'http://127.0.0.1:8000/todolist/task-list/'
+
+  const urlList = 'http://127.0.0.1:8000/todolist/task-list/'
+
   useEffect(() => {
-    axios.get(url)
+    axios.get(urlList)
       .then(res => {
         setTasks(res.data)
       })
   }, [tasks])
+
   return (
     <div id='list-wrapper'>
       {tasks.map((task, index) => {

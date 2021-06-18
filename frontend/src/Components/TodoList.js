@@ -7,11 +7,11 @@ function TodoList () {
   const todos = useSelector(state => state)
 
   return (
-    <div className='my-3'>
+    <div id='list-wrapper'>
       <h3>List of tasks:</h3>
       {todos.map(todo => {
         return (
-          <div key={todo.id}>
+          <div key={todo.id} className='task-wrapper flex-wrapper'>
             <TodoItem key={todo.id} todo={todo} />
           </div>
         )
