@@ -7,7 +7,7 @@
 
 export const todos = [
   {
-    id: '',
+    id: null,
     title: '',
     completed: false
   }
