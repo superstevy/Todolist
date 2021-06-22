@@ -21,6 +21,7 @@ class TodoApi extends React.Component {
     this.deleteItem = this.deleteItem.bind(this)
     this.strikeUnstrike = this.strikeUnstrike.bind(this)
   }
+  
 
   getCookie (name) { // See Django documentation on csrf
     let cookieValue = null
@@ -38,9 +39,11 @@ class TodoApi extends React.Component {
     return cookieValue
   }
 
+
   componentWillMount () {
     this.fetchTasks()
   }
+
 
   fetchTasks () {
     console.log('fetching...')
@@ -51,6 +54,7 @@ class TodoApi extends React.Component {
           todoList: data
         }))
   }
+
 
   handleChange (e) {
     const name = e.target.name
@@ -65,6 +69,7 @@ class TodoApi extends React.Component {
       }
     })
   }
+
 
   handleSubmit (e) {
     e.preventDefault()
@@ -102,12 +107,14 @@ class TodoApi extends React.Component {
     })
   }
 
+
   startEdit (task) {
     this.setState({
       activeItem: task,
       editing: true
     })
   }
+
 
   deleteItem (task) {
     const csrftoken = this.getCookie('csrftoken')
@@ -122,6 +129,7 @@ class TodoApi extends React.Component {
       this.fetchTasks()
     })
   }
+
 
   strikeUnstrike (task) {
     task.completed = !task.completed
@@ -140,6 +148,7 @@ class TodoApi extends React.Component {
     })
   }
 
+
   render () {
     const tasks = this.state.todoList
     const self = this
@@ -149,11 +158,24 @@ class TodoApi extends React.Component {
           <form onSubmit={this.handleSubmit} id='form'>
             <div className='flex-wrapper'>
               <div style={{ flex: 6 }}>
-                <input onChange={this.handleChange} className='form-control' value={this.state.activeItem.title} name='title' type='text' id='title' placeholder='Add task...' />
+                <input
+                  onChange={this.handleChange}
+                  className='form-control'
+                  value={this.state.activeItem.title}
+                  name='title'
+                  type='text'
+                  id='title'
+                  placeholder='Add task...'
+                />
               </div>
 
               <div style={{ flex: 1 }}>
-                <input id='submit' className='btn btn-warning' type='submit' name='Add' />
+                <input
+                  id='submit'
+                  className='btn btn-warning'
+                  type='submit'
+                  name='Add'
+                />
               </div>
             </div>
           </form>
@@ -173,11 +195,21 @@ class TodoApi extends React.Component {
                 </div>
 
                 <div style={{ flex: 1 }}>
-                  <button onClick={() => self.startEdit(task)} className='btn btn-sm btn-outline-info'>Edit</button>
+                  <button
+                    onClick={() => self.startEdit(task)}
+                    className='btn btn-sm btn-outline-info'
+                  >
+                    Edit
+                  </button>
                 </div>
 
                 <div style={{ flex: 1 }}>
-                  <button onClick={() => self.deleteItem(task)} className='btn btn-sm btn-outline-dark'>-</button>
+                  <button
+                    onClick={() => self.deleteItem(task)}
+                    className='btn btn-sm btn-outline-dark'
+                  >
+                    -
+                  </button>
                 </div>
 
               </div>
