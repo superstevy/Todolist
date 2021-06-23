@@ -28,6 +28,14 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'todos-list-backends.herokuapp.com']
 
+# Corsheader
+CORS_ORIGIN_WHITELIST = [
+    "http://localhost:8000",
+    "https://127.0.0.1:8000",
+    "https://todos-list-frontend.herokuapp.com/"
+]
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 # Application definition
 
@@ -131,16 +139,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 django_heroku.settings(locals())
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8000",
-    "https://127.0.0.1:8000",
-    "https://todos-list-frontend.herokuapp.com/"
-]
-
-CORS_ORIGIN_WHITELIST = [
-    "http://localhost:8000",
-    "https://127.0.0.1:8000",
-    "https://todos-list-frontend.herokuapp.com/"
-]
-
-CORS_ORIGIN_ALLOW_ALL = True
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:8000",
+#     "https://127.0.0.1:8000",
+#     "https://todos-list-frontend.herokuapp.com/"
+# ]
