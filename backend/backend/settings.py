@@ -133,4 +133,5 @@ django_heroku.settings(locals())
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
+    "https://todos-list-frontend.herokuapp.com/"
 ]
