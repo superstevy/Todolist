@@ -21,7 +21,7 @@ class TodoApi extends React.Component {
     this.deleteItem = this.deleteItem.bind(this)
     this.strikeUnstrike = this.strikeUnstrike.bind(this)
   }
-  
+
 
   getCookie (name) { // See Django documentation on csrf
     let cookieValue = null
@@ -39,11 +39,9 @@ class TodoApi extends React.Component {
     return cookieValue
   }
 
-
   componentWillMount () {
     this.fetchTasks()
   }
-
 
   fetchTasks () {
     console.log('fetching...')
@@ -54,7 +52,6 @@ class TodoApi extends React.Component {
           todoList: data
         }))
   }
-
 
   handleChange (e) {
     const name = e.target.name
@@ -69,7 +66,6 @@ class TodoApi extends React.Component {
       }
     })
   }
-
 
   handleSubmit (e) {
     e.preventDefault()
@@ -107,14 +103,12 @@ class TodoApi extends React.Component {
     })
   }
 
-
   startEdit (task) {
     this.setState({
       activeItem: task,
       editing: true
     })
   }
-
 
   deleteItem (task) {
     const csrftoken = this.getCookie('csrftoken')
@@ -129,7 +123,6 @@ class TodoApi extends React.Component {
       this.fetchTasks()
     })
   }
-
 
   strikeUnstrike (task) {
     task.completed = !task.completed
@@ -147,7 +140,6 @@ class TodoApi extends React.Component {
       this.fetchTasks()
     })
   }
-
 
   render () {
     const tasks = this.state.todoList

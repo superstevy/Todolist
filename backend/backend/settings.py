@@ -61,7 +61,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR, 'frontend/build')
+            # os.path.join(BASE_DIR, 'frontend/build')
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -144,9 +144,9 @@ django_heroku.settings(locals())
 #     'PAGE_SIZE': 10
 # }
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'frontend/build/static')
-]
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'frontend/build/static')
+# ]
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
