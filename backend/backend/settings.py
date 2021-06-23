@@ -141,8 +141,8 @@ django_heroku.settings(locals())
 
 # CORS_ALLOWED_ORIGINS = [
 #     "http://localhost:8000",
-#     "https://127.0.0.1:8000",
-#     "https://todos-list-frontend.herokuapp.com/"
+#     "http://127.0.0.1:8000",
+#     "http://todos-list-frontend.herokuapp.com/"
 # ]
 
 REST_FRAMEWORK = {

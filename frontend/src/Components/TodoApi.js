@@ -45,7 +45,7 @@ class TodoApi extends React.Component {
 
   fetchTasks () {
     console.log('fetching...')
-    fetch('http://127.0.0.1:8000/todolist/task-list/')
+    fetch('https://todos-list-backends.herokuapp.com/todolist/task-list/')
       .then(response => response.json())
       .then(data =>
         this.setState({
@@ -73,10 +73,10 @@ class TodoApi extends React.Component {
 
     const csrftoken = this.getCookie('csrftoken')
 
-    let url = 'http://127.0.0.1:8000/todolist/task-create/'
+    let url = 'https://todos-list-backends.herokuapp.com/todolist/task-create/'
 
     if (this.state.editing === true) {
-      url = `http://127.0.0.1:8000/todolist/task-update/${this.state.activeItem.id}/`
+      url = `https://todos-list-backends.herokuapp.com/todolist/task-update/${this.state.activeItem.id}/`
       this.setState({
         editing: false
       })
