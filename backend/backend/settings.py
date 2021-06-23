@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+from os import truncate
 from pathlib import Path
 import django_heroku
 
@@ -136,3 +137,5 @@ CORS_ALLOWED_ORIGINS = [
     "https://127.0.0.1:8000",
     "https://todos-list-frontend.herokuapp.com/"
 ]
+
+CORS_ORIGIN_ALLOW_ALL = True
