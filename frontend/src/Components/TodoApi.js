@@ -113,7 +113,7 @@ class TodoApi extends React.Component {
   deleteItem (task) {
     const csrftoken = this.getCookie('csrftoken')
 
-    fetch(`http://127.0.0.1:8000/todolist/task-delete/${task.id}/`, {
+    fetch(`https://todos-list-backends.herokuapp.com/todolist/task-delete/${task.id}/`, {
       method: 'DELETE',
       headers: {
         'content-type': 'application/json',
@@ -127,7 +127,7 @@ class TodoApi extends React.Component {
   strikeUnstrike (task) {
     task.completed = !task.completed
     const csrftoken = this.getCookie('csrftoken')
-    const url = `http://127.0.0.1:8000/todolist/task-update/${task.id}/`
+    const url = `https://todos-list-backends.herokuapp.com/todolist/task-update/${task.id}/`
 
     fetch(url, {
       method: 'POST',
