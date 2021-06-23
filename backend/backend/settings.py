@@ -144,3 +144,7 @@ django_heroku.settings(locals())
 #     "https://127.0.0.1:8000",
 #     "https://todos-list-frontend.herokuapp.com/"
 # ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
+}
