@@ -10,7 +10,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
-from os import truncate
 from pathlib import Path
 import django_heroku
 
@@ -27,7 +26,7 @@ SECRET_KEY = 'django-insecure-gt3t^1#)_le3777qcwzj)ona#c8*62@zkl$11z(jld=xr-eu6)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'https://todos-list-backends.herokuapp.com/']
+ALLOWED_HOSTS = ['127.0.0.1', 'todos-list-backends.herokuapp.com']
 
 
 # Application definition
@@ -133,6 +132,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 django_heroku.settings(locals())
 
 CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8000",
+    "https://127.0.0.1:8000",
+    "https://todos-list-frontend.herokuapp.com/"
+]
+
+CORS_ORIGIN_WHITELIST = [
     "http://localhost:8000",
     "https://127.0.0.1:8000",
     "https://todos-list-frontend.herokuapp.com/"
