@@ -39,7 +39,7 @@ class TodoApi extends React.Component {
     return cookieValue
   }
 
-  componentWillMount () {
+  componentDidMount () {
     this.fetchTasks()
   }
 
