@@ -93,7 +93,7 @@ class TodoApi extends React.Component {
       this.fetchTasks()
       this.setState({
         activeItem: {
-          id: this.state.activeItem.id,
+          id: null,
           title: '',
           completed: false
         }
