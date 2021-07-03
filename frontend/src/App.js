@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.css'
 
-// import TodoApi from './Containers/TodoApi'
 import Signup from './Containers/Signup'
 import Dashboard from './Containers/Dashboard'
 import Login from './Containers/Login.js'
@@ -29,7 +28,6 @@ function App () {
               </Switch>
             </AuthProvider>
           </Router>
-          {/* <TodoApi /> */}
         </div>
       </Container>
     </div>
