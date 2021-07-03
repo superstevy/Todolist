@@ -1,8 +1,8 @@
 import React from 'react'
 
 class TodoApi extends React.Component {
-  constructor (prop) {
-    super(prop)
+  constructor (props) {
+    super(props)
     this.state = {
       todoList: [],
       activeItem: {
