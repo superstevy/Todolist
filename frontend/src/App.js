@@ -4,13 +4,13 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.css'
 
-import Signup from './Containers/Signup'
-import Dashboard from './Containers/Dashboard'
-import Login from './Containers/Login.js'
-import PrivateRoute from './Containers/PrivateRoute'
-import ForgotPassword from './Containers/ForgotPassword'
+import Signup from './containers/Signup'
+import Dashboard from './containers/Dashboard'
+import Login from './containers/Login.js'
+import PrivateRoute from './containers/PrivateRoute'
+import ForgotPassword from './containers/ForgotPassword'
 import { AuthProvider } from './contexts/AuthContext'
-import UpdateProfile from './Containers/UpdateProfile'
+import UpdateProfile from './containers/UpdateProfile'
 
 function App () {
   return (
