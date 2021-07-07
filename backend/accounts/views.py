@@ -45,3 +45,11 @@ def userList(request):
     users = User.objects.all()
     serializer = UserSerializer(users, many=True)
     return Response(serializer.data)
+
+
+@api_view(['DELETE'])
+def userDelete(request, pk):
+    user = User.objects.get(id=pk)
+    user.delete()
+
+    return Response('User successfully deleted!')
