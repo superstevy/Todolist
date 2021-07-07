@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.css'
 
-import Signup from './Containers/Signup.js'
+import Signup from './Containers/Signup'
 import Dashboard from './Containers/Dashboard'
 import Login from './Containers/Login.js'
 import PrivateRoute from './Containers/PrivateRoute'
