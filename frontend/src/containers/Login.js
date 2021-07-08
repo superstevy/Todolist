@@ -36,6 +36,20 @@ export default function Login () {
       setError('')
       setLoading(true)
       await login(emailRef.current.value, passwordRef.current.value)
+      fetch('https://todos-list-backends.herokuapp.com/token-auth/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify()
+      }).then(res => res.json())
+        .then(json => {
+          localStorage.setItem('token', json.token)
+          setUser({
+            loggedIn: true,
+            username: json.user.username
+          })
+        })
       history.push('/')
     } catch {
       setError('Failed to sign in')
