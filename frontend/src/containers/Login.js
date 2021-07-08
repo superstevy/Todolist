@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import { Form, Button, Card, Alert } from 'react-bootstrap'
 import { useAuth } from '../contexts/AuthContext'
 import { Link, useHistory } from 'react-router-dom'
@@ -9,7 +9,25 @@ export default function Login () {
   const { login } = useAuth()
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [user, setUser] = useState({
+    loggedIn: localStorage.getItem('token') ? true : false,
+    username: ''
+  })
   const history = useHistory()
+  const url = 'https://todos-list-backends.herokuapp.com/api/login/'
+
+  useEffect(() => {
+    if (user.loggedIn) {
+      fetch(url, {
+        headers: {
+          Authorization: `JWT ${localStorage.getItem('token')}`
+        }
+      }).then(res => res.json())
+        .then(json => {
+          setUser({ username: json.username })
+        })
+    }
+  })
 
   async function handleSubmit (e) {
     e.preventDefault()
