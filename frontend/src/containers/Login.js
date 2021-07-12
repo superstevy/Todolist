@@ -9,25 +9,24 @@ export default function Login () {
   const { login } = useAuth()
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
-  const [user, setUser] = useState({
-    loggedIn: localStorage.getItem('token') ? true : false,
-    username: ''
-  })
   const history = useHistory()
-  const url = 'https://todos-list-backends.herokuapp.com/api/login/'
 
-  useEffect(() => {
-    if (user.loggedIn) {
-      fetch(url, {
-        headers: {
-          Authorization: `JWT ${localStorage.getItem('token')}`
+  const getCookie = (cookieName) => {
+    let cookieValue = null
+    if (document.cookie && document.cookie !== '') {
+      const cookies = document.cookie.split(';')
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim()
+        // Does this cookie string begin with the name we want?
+        if (cookie.substring(0, cookieName.length + 1) === (cookieName + '=')) {
+          cookieValue = decodeURIComponent(cookie.substring(cookieName.length + 1))
+          break
         }
-      }).then(res => res.json())
-        .then(json => {
-          setUser({ username: json.username })
-        })
+      }
     }
-  })
+
+    return cookieValue
+  }
 
   async function handleSubmit (e) {
     e.preventDefault()
@@ -36,20 +35,6 @@ export default function Login () {
       setError('')
       setLoading(true)
       await login(emailRef.current.value, passwordRef.current.value)
-      fetch('https://todos-list-backends.herokuapp.com/token-auth/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify()
-      }).then(res => res.json())
-        .then(json => {
-          localStorage.setItem('token', json.token)
-          setUser({
-            loggedIn: true,
-            username: json.user.username
-          })
-        })
       history.push('/')
     } catch {
       setError('Failed to sign in')

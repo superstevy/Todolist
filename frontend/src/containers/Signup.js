@@ -7,13 +7,52 @@ export default function Signup () {
   const emailRef = useRef()
   const passwordRef = useRef()
   const passwordConfirmRef = useRef()
+  const usernameRef = useRef()
   const { signup } = useAuth()
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [users, setUsers] = useState({
+    usersList: [],
+    activeUser: {
+      id: null,
+      username: usernameRef,
+      email: emailRef,
+      password: passwordRef
+    }
+  })
   const history = useHistory()
+
+  const getCookie = (cookieName) => {
+    let cookieValue = null
+    if (document.cookie && document.cookie !== '') {
+      const cookies = document.cookie.split(';')
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim()
+        // Does this cookie string begin with the name we want?
+        if (cookie.substring(0, cookieName.length + 1) === (cookieName + '=')) {
+          cookieValue = decodeURIComponent(cookie.substring(cookieName.length + 1))
+          break
+        }
+      }
+    }
+
+    return cookieValue
+  }
+
+  const fetchUsers = () => {
+    console.log('fetching users...')
+    fetch('https://todos-list-backends.herokuapp.com/api/user-list/')
+      .then(response => response.json())
+      .then(data =>
+        setUsers({
+          usersList: data
+        }))
+  }
 
   async function handleSubmit (e) {
     e.preventDefault()
+    const url = 'https://todos-list-backends.herokuapp.com/api/register/'
+    const csrftoken = getCookie('csrftoken')
 
     if (passwordRef.current.value !== passwordConfirmRef.current.value) {
       return setError('Passwords do not match')
@@ -23,6 +62,35 @@ export default function Signup () {
       setError('')
       setLoading(true)
       await signup(emailRef.current.value, passwordRef.current.value)
+      setUsers({
+        ...users,
+        activeUser: {
+          id: null,
+          username: usernameRef.current.value,
+          email: emailRef.current.value,
+          password: passwordRef.current.value
+        }
+      })
+      fetch(url, {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          'X-CSRFToken': csrftoken
+        },
+        body: JSON.stringify(users.activeUser)
+      }).then(response => {
+        fetchUsers()
+        setUsers({
+          activeUser: {
+            id: null,
+            username: '',
+            email: '',
+            password: ''
+          }
+        })
+      }).catch(error => {
+        console.log('ERROR: ', error)
+      })
       history.push('/')
     } catch {
       setError('Failed to create an account')
@@ -38,6 +106,10 @@ export default function Signup () {
           <h2 className='text-center mb-4'>Sign Up</h2>
           {error && <Alert variant='danger'>{error}</Alert>}
           <Form onSubmit={handleSubmit}>
+            <Form.Group id='username'>
+              <Form.Label>Username</Form.Label>
+              <Form.Control type='text' ref={usernameRef} required />
+            </Form.Group>
             <Form.Group id='email'>
               <Form.Label>Email</Form.Label>
               <Form.Control type='email' ref={emailRef} required />

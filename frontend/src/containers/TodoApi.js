@@ -22,7 +22,6 @@ class TodoApi extends React.Component {
     this.strikeUnstrike = this.strikeUnstrike.bind(this)
   }
 
-
   getCookie (name) { // See Django documentation on csrf
     let cookieValue = null
     if (document.cookie && document.cookie !== '') {
