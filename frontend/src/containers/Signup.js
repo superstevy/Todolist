@@ -1,96 +1,61 @@
-import React, { useRef, useState } from 'react'
-import { Form, Button, Card, Alert } from 'react-bootstrap'
+import React, { useState } from 'react'
+import { Card, Alert } from 'react-bootstrap'
 import { Link, useHistory } from 'react-router-dom'
-import { useAuth } from '../contexts/AuthContext'
 
 export default function Signup () {
-  const emailRef = useRef()
-  const passwordRef = useRef()
-  const passwordConfirmRef = useRef()
-  const usernameRef = useRef()
-  const { signup } = useAuth()
-  const [error, setError] = useState('')
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const [passwordConfirm, setPasswordConfirm] = useState('')
+  const [email, setEmail] = useState('')
   const [loading, setLoading] = useState(false)
-  const [users, setUsers] = useState({
-    usersList: [],
-    activeUser: {
-      id: null,
-      username: usernameRef,
-      email: emailRef,
-      password: passwordRef
-    }
-  })
+  const [error, setError] = useState('')
+  const [message, setMessage] = useState('')
   const history = useHistory()
 
-  const getCookie = (cookieName) => {
-    let cookieValue = null
-    if (document.cookie && document.cookie !== '') {
-      const cookies = document.cookie.split(';')
-      for (let i = 0; i < cookies.length; i++) {
-        const cookie = cookies[i].trim()
-        // Does this cookie string begin with the name we want?
-        if (cookie.substring(0, cookieName.length + 1) === (cookieName + '=')) {
-          cookieValue = decodeURIComponent(cookie.substring(cookieName.length + 1))
-          break
-        }
-      }
-    }
-
-    return cookieValue
-  }
-
-  const fetchUsers = () => {
-    console.log('fetching users...')
-    fetch('https://todos-list-backends.herokuapp.com/api/user-list/')
-      .then(response => response.json())
-      .then(data =>
-        setUsers({
-          usersList: data
-        }))
+  const success = (text) => {
+    console.log('Yeah! Authenticated')
+    window.localStorage.setItem('Token', text.access)
+    window.location = '/'
   }
 
   async function handleSubmit (e) {
     e.preventDefault()
-    const url = 'https://todos-list-backends.herokuapp.com/api/register/'
-    const csrftoken = getCookie('csrftoken')
-
-    if (passwordRef.current.value !== passwordConfirmRef.current.value) {
+    if (password !== passwordConfirm) {
       return setError('Passwords do not match')
+    }
+
+    const signup = async (username, email, password, success, fail) => {
+      const url = 'https://todos-list-backends.herokuapp.com/api/register/'
+
+      const response = await fetch(url,
+        {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            username: username,
+            email: email,
+            password: password
+          })
+        })
+      const text = await response.text()
+      if (response.status === 200) {
+        console.log('Success', JSON.parse(text))
+        success(JSON.parse(text))
+      } else {
+        console.log('Failed', text)
+        Object.entries(JSON.parse(text)).forEach(([key, value]) => {
+          fail(`${key}: ${value}`)
+        })
+      }
     }
 
     try {
       setError('')
       setLoading(true)
-      await signup(emailRef.current.value, passwordRef.current.value)
-      setUsers({
-        ...users,
-        activeUser: {
-          id: null,
-          username: usernameRef.current.value,
-          email: emailRef.current.value,
-          password: passwordRef.current.value
-        }
-      })
-      fetch(url, {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json',
-          'X-CSRFToken': csrftoken
-        },
-        body: JSON.stringify(users.activeUser)
-      }).then(response => {
-        fetchUsers()
-        setUsers({
-          activeUser: {
-            id: null,
-            username: '',
-            email: '',
-            password: ''
-          }
-        })
-      }).catch(error => {
-        console.log('ERROR: ', error)
-      })
+      await signup(username, email, password, success, (text) => { setMessage(text) })
       history.push('/')
     } catch {
       setError('Failed to create an account')
@@ -105,27 +70,38 @@ export default function Signup () {
         <Card.Body>
           <h2 className='text-center mb-4'>Sign Up</h2>
           {error && <Alert variant='danger'>{error}</Alert>}
-          <Form onSubmit={handleSubmit}>
-            <Form.Group id='username'>
-              <Form.Label>Username</Form.Label>
-              <Form.Control type='text' ref={usernameRef} required />
-            </Form.Group>
-            <Form.Group id='email'>
-              <Form.Label>Email</Form.Label>
-              <Form.Control type='email' ref={emailRef} required />
-            </Form.Group>
-            <Form.Group id='password'>
-              <Form.Label>Password</Form.Label>
-              <Form.Control type='password' ref={passwordRef} required />
-            </Form.Group>
-            <Form.Group id='password-confirm'>
-              <Form.Label>Confirm Password</Form.Label>
-              <Form.Control type='password' ref={passwordConfirmRef} required />
-            </Form.Group>
-            <Button disabled={loading} className='w-100 mt-3' type='submit'>
-              Sign Up
-            </Button>
-          </Form>
+          <form>
+            <div className='mb-3'>
+              <label htmlFor='username' className='form-label'>Username</label>
+              <input
+                autoFocus type='text' className='form-control' id='username' placeholder='username'
+                onChange={(e) => { setUsername(e.target.value) }} value={username}
+              />
+            </div>
+            <div className='mb-3'>
+              <label htmlFor='email' className='form-label'>Email</label>
+              <input
+                autoFocus type='email' className='form-control' id='email' placeholder='email'
+                onChange={(e) => { setEmail(e.target.value) }} value={email}
+              />
+            </div>
+            <div className='mb-3'>
+              <label htmlFor='password' className='form-label'>Password</label>
+              <input
+                type='password' className='form-control' id='password' placeholder='password'
+                onChange={(e) => { setPassword(e.target.value) }} value={password}
+              />
+            </div>
+            <div className='mb-3'>
+              <label htmlFor='password' className='form-label'>Confirm Password</label>
+              <input
+                type='password' className='form-control' id='passwordConfirm' placeholder='re-enter password'
+                onChange={(e) => { setPasswordConfirm(e.target.value) }} value={passwordConfirm}
+              />
+            </div>
+            <div style={{ margin: '1em', color: 'red' }}>{message}</div>
+            <button disabled={loading} type='submit' className='btn btn-primary w-100 text-center mt-3' onClick={handleSubmit}>Sign Up</button>
+          </form>
         </Card.Body>
       </Card>
       <div className='w-100 text-center mt-2'>

@@ -12,9 +12,9 @@ export default function Login () {
   const [message, setMessage] = useState('')
   const history = useHistory()
 
-  const success = async (text) => {
+  const success = (text) => {
     console.log('Yeah! Authenticated')
-    await window.localStorage.setItem('Token', text.access)
+    window.localStorage.setItem('Token', text.access)
     window.location = '/'
   }
   async function handleSubmit (e) {
@@ -22,6 +22,7 @@ export default function Login () {
 
     const login = async (username, email, password, success, fail) => {
       const url = 'https://todos-list-backends.herokuapp.com/api/login/'
+
       const response = await fetch(url,
         {
           method: 'POST',
@@ -65,41 +66,33 @@ export default function Login () {
     <div>
       <Card>
         <Card.Body>
+          <h2 className='text-center mb-4'>Log</h2>
           {error && <Alert variant='danger'>{error}</Alert>}
-          <div style={{
-            width: '100%',
-            margin: 'auto',
-            marginTop: '200px',
-            boxShadow: '5px 5px 20px #cccccccc',
-            padding: '1em'
-          }}
-          >
-            <form>
-              <div className='mb-3'>
-                <label htmlFor='username' className='form-label'>Username</label>
-                <input
-                  autoFocus type='text' className='form-control' id='username' placeholder='username'
-                  onChange={(e) => { setUsername(e.target.value) }} value={username}
-                />
-              </div>
-              <div className='mb-3'>
-                <label htmlFor='email' className='form-label'>Email</label>
-                <input
-                  autoFocus type='email' className='form-control' id='email' placeholder='email'
-                  onChange={(e) => { setEmail(e.target.value) }} value={email}
-                />
-              </div>
-              <div className='mb-3'>
-                <label htmlFor='password' className='form-label'>Password</label>
-                <input
-                  type='password' className='form-control' id='password' placeholder='password'
-                  onChange={(e) => { setPassword(e.target.value) }} value={password}
-                />
-              </div>
-              <div style={{ margin: '1em', color: 'red' }}>{message}</div>
-              <button disabled={loading} type='submit' className='btn btn-primary w-100 mt-3' onClick={handleSubmit}>Login</button>
-            </form>
-          </div>
+          <form>
+            <div className='mb-3'>
+              <label htmlFor='username' className='form-label'>Username</label>
+              <input
+                autoFocus type='text' className='form-control' id='username' placeholder='username'
+                onChange={(e) => { setUsername(e.target.value) }} value={username}
+              />
+            </div>
+            <div className='mb-3'>
+              <label htmlFor='email' className='form-label'>Email</label>
+              <input
+                autoFocus type='email' className='form-control' id='email' placeholder='email'
+                onChange={(e) => { setEmail(e.target.value) }} value={email}
+              />
+            </div>
+            <div className='mb-3'>
+              <label htmlFor='password' className='form-label'>Password</label>
+              <input
+                type='password' className='form-control' id='password' placeholder='password'
+                onChange={(e) => { setPassword(e.target.value) }} value={password}
+              />
+            </div>
+            <div style={{ margin: '1em', color: 'red' }}>{message}</div>
+            <button disabled={loading} type='submit' className='btn btn-primary w-100 text-center mt-3' onClick={handleSubmit}>Login</button>
+          </form>
           <div className='w-100 text-center mt-3'>
             <Link to='/forgot-password'>Forgot Password?</Link>
           </div>
