@@ -15,6 +15,7 @@ export default function Login () {
   const success = (text) => {
     console.log('Yeah! Authenticated')
     window.localStorage.setItem('Token', text.access)
+    history.push('/')
     // window.location = '/'
   }
   async function handleSubmit (e) {
