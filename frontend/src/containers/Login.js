@@ -97,7 +97,7 @@ export default function Login () {
                 />
               </div>
               <div style={{ margin: '1em', color: 'red' }}>{message}</div>
-              <button disabled={loading} type='submit' className='btn btn-primary' onClick={handleSubmit}>Login</button>
+              <button disabled={loading} type='submit' className='btn btn-primary w-100 mt-3' onClick={handleSubmit}>Login</button>
             </form>
           </div>
           <div className='w-100 text-center mt-3'>
