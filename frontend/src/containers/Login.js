@@ -67,7 +67,7 @@ export default function Login () {
         <Card.Body>
           {error && <Alert variant='danger'>{error}</Alert>}
           <div style={{
-            width: '400px',
+            width: '100%',
             margin: 'auto',
             marginTop: '200px',
             boxShadow: '5px 5px 20px #cccccccc',
