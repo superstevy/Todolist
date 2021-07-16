@@ -14,7 +14,7 @@ export default function Login () {
 
   const success = async (text) => {
     console.log('Yeah! Authenticated')
-    await window.localStorage.setItem('salesToken', text.access)
+    await window.localStorage.setItem('Token', text.access)
     window.location = '/'
   }
   async function handleSubmit (e) {
