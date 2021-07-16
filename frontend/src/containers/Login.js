@@ -1,23 +1,29 @@
-import React, { useRef, useState } from 'react'
+import React, { useState } from 'react'
 import { Form, Button, Card, Alert } from 'react-bootstrap'
-import { useAuth } from '../contexts/AuthContext'
+
 import { Link, useHistory } from 'react-router-dom'
 
 export default function Login () {
-  const emailRef = useRef()
-  const passwordRef = useRef()
-  const { login } = useAuth()
-  const [error, setError] = useState('')
-  const [loading, setLoading] = useState(false)
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState('')
   const history = useHistory()
 
+  const success = async (text) => {
+    console.log('Yeah! Authenticated')
+    await window.localStorage.setItem('salesToken', text.access)
+    window.location = '/'
+  }
   async function handleSubmit (e) {
     e.preventDefault()
+
+    const login = async (username, email, password, success, fail) => {}
+    console.log('Loggin in with', username, email, password)
 
     try {
       setError('')
       setLoading(true)
-      await login(emailRef.current.value, passwordRef.current.value)
+      await login(username, email, password, success)
       history.push('/')
     } catch {
       setError('Failed to sign in')
