@@ -9,7 +9,7 @@ export default function Login () {
   const [email, setEmail] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
-  const [message, setMessage] = React.useState('')
+  const [message, setMessage] = useState('')
   const history = useHistory()
 
   const success = async (text) => {
