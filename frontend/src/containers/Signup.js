@@ -15,7 +15,8 @@ export default function Signup () {
   const success = (text) => {
     console.log('Yeah! Authenticated')
     window.localStorage.setItem('Token', text.access)
-    window.location = '/'
+    history.push('/')
+    // window.location = '/'
   }
 
   async function handleSubmit (e) {
