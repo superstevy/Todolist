@@ -7,7 +7,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import Signup from './containers/Signup'
 import Dashboard from './containers/Dashboard'
 import Login from './containers/Login.js'
-import PrivateRoute from './containers/PrivateRoute'
+// import PrivateRoute from './containers/PrivateRoute'
 import ForgotPassword from './containers/ForgotPassword'
 // import { AuthProvider } from './contexts/AuthContext'
 import UpdateProfile from './containers/UpdateProfile'
@@ -19,8 +19,8 @@ function App () {
         <div className='w-100' style={{ maxWidth: '400px' }}>
           <Router>
             <Switch>
-              <PrivateRoute exact path='/' component={Dashboard} />
-              <PrivateRoute path='/update-profile' component={UpdateProfile} />
+              <Route exact path='/' component={Dashboard} />
+              <Route path='/update-profile' component={UpdateProfile} />
               <Route path='/signup' component={Signup} />
               <Route path='/login' component={Login} />
               <Route path='/forgot-password' component={ForgotPassword} />
