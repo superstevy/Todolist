@@ -12,16 +12,10 @@ export default function Login () {
   const [message, setMessage] = useState('')
   const history = useHistory()
 
-  const success = (text) => {
-    console.log('Yeah! Authenticated')
-    window.localStorage.setItem('Token', text.access)
-    // history.push('/')
-    // window.location = '/'
-  }
   async function handleSubmit (e) {
     e.preventDefault()
 
-    const login = async (username, email, password, success, fail) => {
+    const login = async (username, email, password, fail) => {
       const url = 'https://todos-list-backends.herokuapp.com/api/login/'
 
       const response = await fetch(url,
@@ -40,7 +34,6 @@ export default function Login () {
       const text = await response.text()
       if (response.status === 200) {
         console.log('Success', JSON.parse(text))
-        success(JSON.parse(text))
       } else {
         console.log('Failed', text)
         Object.entries(JSON.parse(text)).forEach(([key, value]) => {
@@ -54,7 +47,7 @@ export default function Login () {
     try {
       setError('')
       setLoading(true)
-      await login(username, email, password, success, (text) => { setMessage(text) })
+      await login(username, email, password, (text) => { setMessage(text) })
       history.push('/')
     } catch {
       setError('Failed to sign in')

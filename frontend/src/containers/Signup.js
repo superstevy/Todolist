@@ -12,20 +12,13 @@ export default function Signup () {
   const [message, setMessage] = useState('')
   const history = useHistory()
 
-  const success = (text) => {
-    console.log('Yeah! Authenticated')
-    window.localStorage.setItem('Token', text.access)
-    // history.push('/')
-    // window.location = '/'
-  }
-
   async function handleSubmit (e) {
     e.preventDefault()
     if (password !== passwordConfirm) {
       return setError('Passwords do not match')
     }
 
-    const signup = async (username, email, password, success, fail) => {
+    const signup = async (username, email, password, fail) => {
       const url = 'https://todos-list-backends.herokuapp.com/api/register/'
 
       const response = await fetch(url,
@@ -44,7 +37,6 @@ export default function Signup () {
       const text = await response.text()
       if (response.status === 200) {
         console.log('Success', JSON.parse(text))
-        success(JSON.parse(text))
       } else {
         console.log('Failed', text)
         Object.entries(JSON.parse(text)).forEach(([key, value]) => {
@@ -56,7 +48,7 @@ export default function Signup () {
     try {
       setError('')
       setLoading(true)
-      await signup(username, email, password, success, (text) => { setMessage(text) })
+      await signup(username, email, password, (text) => { setMessage(text) })
       history.push('/')
     } catch {
       setError('Failed to create an account')
